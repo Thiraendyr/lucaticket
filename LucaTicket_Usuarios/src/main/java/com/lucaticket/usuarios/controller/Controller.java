@@ -1,5 +1,6 @@
 package com.lucaticket.usuarios.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lucaticket.usuarios.model.dto.Usuario_DTO;
 import com.lucaticket.usuarios.service.IUsuarioService;
+import com.lucaticket.usuarios.util.JsonUtilsCustom;
 
 @RestController
 @RequestMapping("/usuario")
@@ -68,8 +70,26 @@ public class Controller {
 	 * @return usuario creado y httpsstatus
 	 *
 	 */
-	public ResponseEntity<Usuario_DTO> postUsuario(@RequestBody Usuario_DTO usuario) {
-		return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(usuario), HttpStatus.CREATED);
+	public ResponseEntity<Usuario_DTO> postUsuario(@RequestBody String jsonUsuario) {
+		Usuario_DTO usuario = JsonUtilsCustom.convertirJsonAUsuario(jsonUsuario);
+		if (usuario != null) {
+			if (usuario.getNombre() != null && usuario.getApellido() != null && usuario.getEmail() != null
+					&& usuario.getContrasenia() != null) {
+				if (usuario.getId_usuario() == null
+						|| usuarioService.findUsuarioById(usuario.getId_usuario()).getId_usuario() == null) {
+					if (usuario.getFecha_alta() == null) {
+						usuario.setFecha_alta(new Date());
+					}
+					return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(usuario), HttpStatus.CREATED);
+
+				} else {
+					return new ResponseEntity<Usuario_DTO>(new Usuario_DTO(), HttpStatus.IM_USED);
+				}
+
+			}
+		}
+
+		return new ResponseEntity<Usuario_DTO>(new Usuario_DTO(), HttpStatus.BAD_REQUEST);
 	}
 
 	@PutMapping("/update")
@@ -81,14 +101,20 @@ public class Controller {
 	 * @return usuario actualizado y httpsstatus
 	 *
 	 */
-	public ResponseEntity<Usuario_DTO> putUsuario(@RequestBody Usuario_DTO usuario) {
-		if (usuarioService.findUsuarioById(usuario.getId_usuario()).getId_usuario() != null) {
-			return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(usuario), HttpStatus.OK);
-			
+	public ResponseEntity<Usuario_DTO> putUsuario(@RequestBody String jsonUsuario) {
+		Usuario_DTO usuario = JsonUtilsCustom.convertirJsonAUsuario(jsonUsuario);
+		if (usuario != null) {
+			if (usuarioService.findUsuarioById(usuario.getId_usuario()).getId_usuario() != null) {
+				return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(usuario), HttpStatus.OK);
+
+			} else {
+				return new ResponseEntity<Usuario_DTO>(new Usuario_DTO(), HttpStatus.NOT_FOUND);
+			}
+
 		} else {
-			return new ResponseEntity<Usuario_DTO>(new Usuario_DTO(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Usuario_DTO>(new Usuario_DTO(), HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
 
 	@DeleteMapping("/delete/{id}")
