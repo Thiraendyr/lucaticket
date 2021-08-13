@@ -17,5 +17,7 @@ import com.lucaticket.usuarios.model.Usuario;
  *
  */
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
+	
+	Usuario findByNombre(String nombre);
 
 }
