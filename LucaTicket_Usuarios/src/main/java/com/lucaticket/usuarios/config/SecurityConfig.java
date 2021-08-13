@@ -13,6 +13,16 @@ import com.lucaticket.usuarios.service.impl.UserService;
 
 @Configuration
 @EnableWebSecurity
+/**
+ * 
+ * SecurityConfig
+ * 
+ * @author David
+ * @version 1.0
+ * @see 13/08/2021
+ * @see Clase configuración para establecer autenticación
+ *
+ */
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -33,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
-		http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+		http.authorizeRequests().anyRequest().authenticated().and().httpBasic().and().cors().and().csrf().disable();
 	}
 
 }

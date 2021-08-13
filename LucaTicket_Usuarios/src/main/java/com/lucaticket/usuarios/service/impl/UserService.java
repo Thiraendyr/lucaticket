@@ -17,6 +17,16 @@ import com.lucaticket.usuarios.repository.IUsuarioRepository;
 import com.lucaticket.usuarios.util.Convertidor;
 
 @Service
+/**
+ * 
+ * UserService
+ * 
+ * @author David
+ * @version 1.0
+ * @see 13/08/2021
+ * @see Clase servicio para autenticar el acceso
+ *
+ */
 public class UserService implements UserDetailsService {
 	
 	@Autowired

@@ -52,7 +52,7 @@ public class Controller {
 		return new ResponseEntity<List<Usuario_DTO>>(usuarioService.findAllUsuarios(), HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{idUsuario}")
 	/**
 	 * 
 	 * Método que devuelve un usuario por el id que se le pasa
@@ -61,11 +61,11 @@ public class Controller {
 	 * @return usuario buscado y httpsstatus
 	 *
 	 */
-	public ResponseEntity<Usuario_DTO> getUsuarioById(@PathVariable("id") int id) {
-		return new ResponseEntity<Usuario_DTO>(usuarioService.findUsuarioById(id), HttpStatus.OK);
+	public ResponseEntity<Usuario_DTO> getUsuarioById(@PathVariable("idUsuario") int idUsuario) {
+		return new ResponseEntity<Usuario_DTO>(usuarioService.findUsuarioById(idUsuario), HttpStatus.OK);
 	}
 
-	@PostMapping("/new")
+	@PostMapping("/crear")
 	/**
 	 * 
 	 * Método que crea un usuario nuevo
@@ -97,7 +97,7 @@ public class Controller {
 		return new ResponseEntity<Usuario_DTO>(new Usuario_DTO(), HttpStatus.BAD_REQUEST);
 	}
 
-	@PutMapping("/update")
+	@PutMapping("/modificar")
 	/**
 	 * 
 	 * Método que actualiza un usuario
@@ -110,6 +110,7 @@ public class Controller {
 		Usuario_DTO usuario = JsonUtilsCustom.convertirJsonAUsuario(jsonUsuario);
 		if (usuario != null) {
 			if (usuarioService.findUsuarioById(usuario.getId_usuario()).getId_usuario() != null) {
+				usuario.setContrasenia(encoder.encode(usuario.getContrasenia()));
 				return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(usuario), HttpStatus.OK);
 
 			} else {
@@ -122,7 +123,7 @@ public class Controller {
 
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{idUsuario}")
 	/**
 	 * 
 	 * Método que elimina un usuario por el id que se le pasa
@@ -131,9 +132,9 @@ public class Controller {
 	 * @return httpsstatus
 	 *
 	 */
-	public ResponseEntity deleteUsuarioById(@PathVariable("id") int id) {
-		if (usuarioService.findUsuarioById(id).getId_usuario() != null) {
-			usuarioService.removeUsuarioById(id);
+	public ResponseEntity deleteUsuarioById(@PathVariable("idUsuario") int idUsuario) {
+		if (usuarioService.findUsuarioById(idUsuario).getId_usuario() != null) {
+			usuarioService.removeUsuarioById(idUsuario);
 			return new ResponseEntity(HttpStatus.OK);
 		} else {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
