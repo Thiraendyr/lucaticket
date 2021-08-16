@@ -1,0 +1,247 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: Swagger API Usuarios
+  termsOfService: 'http://swagger.io/terms/'
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'localhost:2222'
+basePath: /usuario
+tags:
+  - name: usuario
+    description: gestión de usuarios
+    externalDocs:
+      description: Find out more about our store
+      url: 'http://swagger.io'
+schemes:
+  - http
+paths:
+  '/all':
+    get:
+      tags:
+      - usuario
+      summary: consulta una lista de usuarios
+      operationId: getAllUsuarios
+      produces:
+      - application/json
+      - application/xml
+      responses:
+        '200':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/listaUsuario'
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+        '400':
+          description: Invalid ID supplied
+        '401':
+          description: Not authorized
+        '404':
+          description: Not found
+  '/{idUsuario}':
+    get:
+      tags:
+      - usuario
+      summary: consulta un usuario
+      operationId: getUsuarioById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: idUsuario
+        in: path
+        description: usuario a obtener
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/usuario'
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+        '400':
+          description: Invalid ID supplied
+        '401':
+          description: Not authorized
+        '404':
+          description: Not found
+    delete:
+      tags:
+      - usuario
+      summary: Elimina un usuario
+      operationId: deleteUsuarioById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: idUsuario
+        in: path
+        description: Id de usuario a eliminar
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/RespuestaOk'
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+        '400':
+          description: Invalid ID supplied
+        '401':
+          description: Not authorized
+        '404':
+          description: Not found
+  
+  '/crear':
+    post:
+      tags:
+        - usuario
+      summary: agrega un usuario
+      operationId: postUsuario
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: agrega un usuario
+          required: true
+          schema:
+            $ref: '#/definitions/usuario'
+      responses:
+        '201':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/RespuestaOk'
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+        '226':
+          description: Id en uso
+        '400':
+          description: Error de JSON
+        '401':
+          description: Not authorized
+        '404':
+          description: Not found
+  '/modificar':
+    put:
+      tags:
+        - usuario
+      summary: Actualiza un usuario
+      operationId: putUsuario
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: actualizar cliente
+          required: true
+          schema:
+            $ref: '#/definitions/usuario'
+      responses:
+        '200':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/RespuestaOk'
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+        
+        '400':
+          description: Error de JSON
+        '401':
+          description: Not authorized
+        '404':
+          description: Id usuario no encontrado
+definitions:
+  usuario:
+    type: object
+    properties:
+      id_usuario:
+        type: integer
+      nombre:
+        type: string
+      apellido:
+        type: string
+      email:
+        type: string
+      contrasenia:
+        type: string
+      fecha_alta:
+        type: string
+  listaUsuario:
+    type: array
+    items:
+      $ref: '#/definitions/usuario'
+          
+  RespuestaOk:
+    type: object
+    properties:
+      codigo:
+        type: string
+      mensaje:
+        type: string
+    example:
+      codigo: '0'
+      mensaje: Operación exitosa
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
