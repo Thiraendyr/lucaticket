@@ -1,12 +1,10 @@
 package com.lucaticket.clientes.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lucaticket.clientes.model.dto.Cliente_DTO;
 import com.lucaticket.clientes.service.IClienteService;
 import com.lucaticket.clientes.util.JsonUtilsCustom;
+import com.lucaticket.clientes.util.Operaciones;
 
 @RestController
 @RequestMapping("/banco/cliente")
@@ -36,9 +35,9 @@ public class Controller {
 
 	@Autowired
 	private IClienteService clienteService;
-	
+	/*
 	@Autowired
-	private BCryptPasswordEncoder encoder;
+	private BCryptPasswordEncoder encoder;*/
 
 	@GetMapping("/all")
 	/**
@@ -81,9 +80,9 @@ public class Controller {
 				if (cliente.getIdCliente() == null
 						|| clienteService.findById(cliente.getIdCliente()).getIdCliente() == null) {
 					if (cliente.getNumeroCuenta() == null) {
-						//TODO generar numero de cuenta aleatorio (2 letras 8 numeros);
+						cliente.setNumeroCuenta("ES" + Operaciones.numeroAleatorio(22));
 					}
-					cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
+					//cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
 					return new ResponseEntity<Cliente_DTO>(clienteService.save(cliente), HttpStatus.CREATED);
 
 				} else {
@@ -108,9 +107,10 @@ public class Controller {
 	public ResponseEntity<Cliente_DTO> putcliente(@RequestBody String jsoncliente) {
 		Cliente_DTO cliente = JsonUtilsCustom.convertirJsonACliente(jsoncliente);
 		if (cliente != null) {
-			if (clienteService.findById(cliente.getIdCliente()).getIdCliente() != null) {
-				cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
-				return new ResponseEntity<Cliente_DTO>(clienteService.save(cliente), HttpStatus.OK);
+			Cliente_DTO clienteBD = clienteService.findById(cliente.getIdCliente());
+			if (clienteBD.getIdCliente() != null) {
+				//cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
+				return new ResponseEntity<Cliente_DTO>(clienteService.save(Operaciones.parseoCliente(cliente, clienteBD)), HttpStatus.OK);
 
 			} else {
 				return new ResponseEntity<Cliente_DTO>(new Cliente_DTO(), HttpStatus.NOT_FOUND);
