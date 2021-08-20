@@ -48,7 +48,7 @@ public class Controller {
 	 * @return lista de clientes y httpsstatus
 	 *
 	 */
-	public ResponseEntity<List<Cliente_DTO>> getAllclientes() {
+	public ResponseEntity<List<Cliente_DTO>> getAllClientes() {
 		return new ResponseEntity<List<Cliente_DTO>>(clienteService.findAll(), HttpStatus.OK);
 	}
 
@@ -61,8 +61,8 @@ public class Controller {
 	 * @return cliente buscado y httpsstatus
 	 *
 	 */
-	public ResponseEntity<Cliente_DTO> getclienteById(@PathVariable("idcliente") int idcliente) {
-		return new ResponseEntity<Cliente_DTO>(clienteService.findById(idcliente), HttpStatus.OK);
+	public ResponseEntity<Cliente_DTO> getClienteById(@PathVariable("idCliente") int idCliente) {
+		return new ResponseEntity<Cliente_DTO>(clienteService.findById(idCliente), HttpStatus.OK);
 	}
 
 	@PostMapping("/crear")
@@ -74,7 +74,7 @@ public class Controller {
 	 * @return cliente creado y httpsstatus
 	 *
 	 */
-	public ResponseEntity<Cliente_DTO> postcliente(@RequestBody String jsoncliente) {
+	public ResponseEntity<Cliente_DTO> postCliente(@RequestBody String jsoncliente) {
 		Cliente_DTO cliente = JsonUtilsCustom.convertirJsonACliente(jsoncliente);
 		if (cliente != null) {
 			if (cliente.getNombre() != null && cliente.getApellido() != null && cliente.getContrasenia() != null) {
@@ -105,7 +105,7 @@ public class Controller {
 	 * @return cliente actualizado y httpsstatus
 	 *
 	 */
-	public ResponseEntity<Cliente_DTO> putcliente(@RequestBody String jsoncliente) {
+	public ResponseEntity<Cliente_DTO> putCliente(@RequestBody String jsoncliente) {
 		Cliente_DTO cliente = JsonUtilsCustom.convertirJsonACliente(jsoncliente);
 		if (cliente != null) {
 			Cliente_DTO clienteBD = clienteService.findById(cliente.getIdCliente());
@@ -127,7 +127,7 @@ public class Controller {
 
 	}
 
-	@DeleteMapping("/{idcliente}")
+	@DeleteMapping("/{idCliente}")
 	/**
 	 * 
 	 * Método que elimina un cliente por el id que se le pasa
@@ -136,9 +136,9 @@ public class Controller {
 	 * @return httpsstatus
 	 *
 	 */
-	public ResponseEntity deleteclienteById(@PathVariable("idcliente") int idcliente) {
-		if (clienteService.findById(idcliente).getIdCliente() != null) {
-			clienteService.deleteById(idcliente);
+	public ResponseEntity deleteClienteById(@PathVariable("idCliente") int idCliente) {
+		if (clienteService.findById(idCliente).getIdCliente() != null) {
+			clienteService.deleteById(idCliente);
 			return new ResponseEntity(HttpStatus.OK);
 		} else {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
