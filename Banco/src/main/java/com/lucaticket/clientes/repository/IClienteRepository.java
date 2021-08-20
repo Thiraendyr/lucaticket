@@ -17,5 +17,7 @@ import com.lucaticket.clientes.model.Cliente;
  *
  */
 public interface IClienteRepository extends JpaRepository<Cliente, Integer> {
+	
+	Cliente findByNombre(String nombre);
 
 }

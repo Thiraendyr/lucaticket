@@ -110,10 +110,14 @@ public class Controller {
 	public ResponseEntity<Usuario_DTO> putUsuario(@RequestBody String jsonUsuario) {
 		Usuario_DTO usuario = JsonUtilsCustom.convertirJsonAUsuario(jsonUsuario);
 		if (usuario != null) {
-			Usuario_DTO usuarioDB = usuarioService.findUsuarioById(usuario.getId_usuario());
-			if (usuarioDB.getId_usuario() != null) {
-				usuario.setContrasenia(encoder.encode(usuario.getContrasenia()));
-				return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(Operaciones.parseoUsuario(usuario, usuarioDB)), HttpStatus.OK);
+			Usuario_DTO usuarioBD = usuarioService.findUsuarioById(usuario.getId_usuario());
+			if (usuarioBD.getId_usuario() != null) {
+				if(usuario.getContrasenia() == null) {
+					usuario.setContrasenia(usuarioBD.getContrasenia());
+				} else {
+					usuario.setContrasenia(encoder.encode(usuario.getContrasenia()));
+				}
+				return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(Operaciones.parseoUsuario(usuario, usuarioBD)), HttpStatus.OK);
 
 			} else {
 				return new ResponseEntity<Usuario_DTO>(new Usuario_DTO(), HttpStatus.NOT_FOUND);

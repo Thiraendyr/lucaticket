@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,9 +36,9 @@ public class Controller {
 
 	@Autowired
 	private IClienteService clienteService;
-	/*
+	
 	@Autowired
-	private BCryptPasswordEncoder encoder;*/
+	private BCryptPasswordEncoder encoder;
 
 	@GetMapping("/all")
 	/**
@@ -82,7 +83,7 @@ public class Controller {
 					if (cliente.getNumeroCuenta() == null) {
 						cliente.setNumeroCuenta("ES" + Operaciones.numeroAleatorio(22));
 					}
-					//cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
+					cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
 					return new ResponseEntity<Cliente_DTO>(clienteService.save(cliente), HttpStatus.CREATED);
 
 				} else {
@@ -109,7 +110,11 @@ public class Controller {
 		if (cliente != null) {
 			Cliente_DTO clienteBD = clienteService.findById(cliente.getIdCliente());
 			if (clienteBD.getIdCliente() != null) {
-				//cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
+				if(cliente.getContrasenia() == null) {
+					cliente.setContrasenia(clienteBD.getContrasenia());
+				} else {
+					cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
+				}
 				return new ResponseEntity<Cliente_DTO>(clienteService.save(Operaciones.parseoCliente(cliente, clienteBD)), HttpStatus.OK);
 
 			} else {
