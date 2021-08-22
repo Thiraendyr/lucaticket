@@ -23,6 +23,8 @@ public class MEvento {
 
 	@ApiModelProperty(value = "id_evento identificador de un evento")
 	private Integer id_evento;
+	@ApiModelProperty(value = "id_usuario identificador del usuario que creará el evento")
+	private Integer id_usuario;
 	@ApiModelProperty(value = "nombre de evento")
 	private String nombre;
 	@ApiModelProperty(value = "descripción corta de un evento")

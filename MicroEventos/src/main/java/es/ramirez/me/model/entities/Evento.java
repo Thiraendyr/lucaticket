@@ -32,6 +32,10 @@ public class Evento implements Serializable {
 	@Id
 	private Integer id_evento;
 	/**
+	 * identificador del usuario que creará el evento
+	 */
+	private Integer id_usuario;
+	/**
 	 * nombre de evento
 	 */
 	private String nombre;

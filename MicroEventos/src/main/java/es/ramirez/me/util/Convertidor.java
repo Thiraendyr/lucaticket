@@ -25,6 +25,7 @@ public class Convertidor {
 	public static MEvento eventoEntityToModel(Evento e) {
 		MEvento mevento = new MEvento();
 		mevento.setId_evento(e.getId_evento());
+		mevento.setId_usuario(e.getId_usuario());
 		mevento.setNombre(e.getNombre());
 		mevento.setDesc_corta(e.getDesc_corta());
 		mevento.setDesc_ext(e.getDesc_ext());
@@ -46,6 +47,7 @@ public class Convertidor {
 	public static Evento meventoToEntity(MEvento me) {
 		Evento evento = new Evento();
 		evento.setId_evento(me.getId_evento());
+		evento.setId_usuario(me.getId_usuario());
 		evento.setNombre(me.getNombre());
 		evento.setDesc_corta(me.getDesc_corta());
 		evento.setDesc_ext(me.getDesc_ext());

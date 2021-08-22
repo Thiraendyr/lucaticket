@@ -50,6 +50,7 @@ public class EventoService implements IEvento {
 			return "error";
 		} else {
 			evento.setId_evento(me.getId_evento());
+			evento.setId_usuario(me.getId_usuario());
 			evento.setNombre(me.getNombre());
 			evento.setDesc_corta(me.getDesc_corta());
 			evento.setDesc_ext(me.getDesc_ext());

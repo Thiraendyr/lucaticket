@@ -37,6 +37,7 @@ class MicroEventosApplicationTests {
 		MEvento evento = new MEvento();
 
 		evento.setId_evento(7);
+		evento.setId_usuario(1);
 		evento.setNombre("Curso de Docker");
 		evento.setDesc_corta("Curso de Docker");
 		evento.setDesc_ext("Curso de Docker para principiantes");
@@ -80,7 +81,6 @@ class MicroEventosApplicationTests {
 		evento.setMrecinto(mrecinto);
 
 		String editar = ievento.editarEvento(evento);
-		// assertTrue("ok".equalsIgnoreCase(editar));
 		assertNotEquals("error", editar);
 	}
 
