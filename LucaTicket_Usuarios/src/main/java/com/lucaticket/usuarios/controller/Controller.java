@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lucaticket.usuarios.model.dto.Usuario_DTO;
 import com.lucaticket.usuarios.service.IUsuarioService;
 import com.lucaticket.usuarios.util.JsonUtilsCustom;
+import com.lucaticket.usuarios.util.Operaciones;
 
 @RestController
 @RequestMapping("/usuario")
@@ -109,9 +110,14 @@ public class Controller {
 	public ResponseEntity<Usuario_DTO> putUsuario(@RequestBody String jsonUsuario) {
 		Usuario_DTO usuario = JsonUtilsCustom.convertirJsonAUsuario(jsonUsuario);
 		if (usuario != null) {
-			if (usuarioService.findUsuarioById(usuario.getId_usuario()).getId_usuario() != null) {
-				usuario.setContrasenia(encoder.encode(usuario.getContrasenia()));
-				return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(usuario), HttpStatus.OK);
+			Usuario_DTO usuarioBD = usuarioService.findUsuarioById(usuario.getId_usuario());
+			if (usuarioBD.getId_usuario() != null) {
+				if(usuario.getContrasenia() == null) {
+					usuario.setContrasenia(usuarioBD.getContrasenia());
+				} else {
+					usuario.setContrasenia(encoder.encode(usuario.getContrasenia()));
+				}
+				return new ResponseEntity<Usuario_DTO>(usuarioService.saveUsuario(Operaciones.parseoUsuario(usuario, usuarioBD)), HttpStatus.OK);
 
 			} else {
 				return new ResponseEntity<Usuario_DTO>(new Usuario_DTO(), HttpStatus.NOT_FOUND);
