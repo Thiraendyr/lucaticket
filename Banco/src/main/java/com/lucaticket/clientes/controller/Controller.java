@@ -52,7 +52,7 @@ public class Controller {
 		return new ResponseEntity<List<Cliente_DTO>>(clienteService.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/{idcliente}")
+	@GetMapping("/{idCliente}")
 	/**
 	 * 
 	 * Método que devuelve un cliente por el id que se le pasa
