@@ -36,7 +36,7 @@ public class Controller {
 
 	@Autowired
 	private IClienteService clienteService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
@@ -110,12 +110,17 @@ public class Controller {
 		if (cliente != null) {
 			Cliente_DTO clienteBD = clienteService.findById(cliente.getIdCliente());
 			if (clienteBD.getIdCliente() != null) {
-				if(cliente.getContrasenia() == null) {
-					cliente.setContrasenia(clienteBD.getContrasenia());
+				if (cliente.getSaldo() >= 0) {
+					if (cliente.getContrasenia() == null) {
+						cliente.setContrasenia(clienteBD.getContrasenia());
+					} else {
+						cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
+					}
+					return new ResponseEntity<Cliente_DTO>(
+							clienteService.save(Operaciones.parseoCliente(cliente, clienteBD)), HttpStatus.OK);
 				} else {
-					cliente.setContrasenia(encoder.encode(cliente.getContrasenia()));
+					return new ResponseEntity<Cliente_DTO>(new Cliente_DTO(), HttpStatus.NOT_ACCEPTABLE);
 				}
-				return new ResponseEntity<Cliente_DTO>(clienteService.save(Operaciones.parseoCliente(cliente, clienteBD)), HttpStatus.OK);
 
 			} else {
 				return new ResponseEntity<Cliente_DTO>(new Cliente_DTO(), HttpStatus.NOT_FOUND);
