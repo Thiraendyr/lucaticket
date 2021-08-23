@@ -33,7 +33,6 @@ public class Convertidor {
 		mevento.setFoto(e.getFoto());
 		mevento.setGenero(e.getGenero());
 		mevento.setPolitica_acceso(e.getPolitica_acceso());
-		mevento.setPrecio(e.getPrecio());
 		mevento.setMrecinto(recintoEntityToModel(e.getRecinto()));
 		return mevento;
 	}
@@ -55,7 +54,6 @@ public class Convertidor {
 		evento.setFoto(me.getFoto());
 		evento.setGenero(me.getGenero());
 		evento.setPolitica_acceso(me.getPolitica_acceso());
-		evento.setPrecio(me.getPrecio());
 		evento.setRecinto(mrecintoToEntity(me.getMrecinto()));
 		return evento;
 	}

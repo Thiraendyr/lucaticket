@@ -37,8 +37,6 @@ public class MEvento {
 	private String genero;
 	@ApiModelProperty(value = "fecha y hora de celebración de un evento")
 	private Date fechaHora;
-	@ApiModelProperty(value = "coste de un evento")
-	private Double precio;
 	@ApiModelProperty(value = "autorización para acceder a un evento")
 	private String politica_acceso;
 	@ApiModelProperty(value = "local donde se va a celebrar un evento")

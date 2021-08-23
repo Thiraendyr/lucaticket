@@ -45,7 +45,6 @@ class MicroEventosApplicationTests {
 		evento.setFoto("");
 		evento.setGenero("Jazz");
 		evento.setPolitica_acceso("Solo personal autorizado");
-		evento.setPrecio(25.50);
 		MRecinto mrecinto = new MRecinto();
 		mrecinto.setId_recinto(3);
 		mrecinto.setNombre("Aula Magna");
@@ -71,7 +70,6 @@ class MicroEventosApplicationTests {
 		evento.setFoto("");
 		evento.setGenero("Jazz");
 		evento.setPolitica_acceso("Solo personal autorizado");
-		evento.setPrecio(25.50);
 		MRecinto mrecinto = new MRecinto();
 		mrecinto.setId_recinto(3);
 		mrecinto.setNombre("Aula Magna");

@@ -60,10 +60,6 @@ public class Evento implements Serializable {
 	 */
 	private Date fechaHora;
 	/**
-	 * coste de un evento
-	 */
-	private Double precio;
-	/**
 	 * autorización para acceder a un evento
 	 */
 	private String politica_acceso;

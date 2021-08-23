@@ -58,7 +58,6 @@ public class EventoService implements IEvento {
 			evento.setFoto(me.getFoto());
 			evento.setGenero(me.getGenero());
 			evento.setPolitica_acceso(me.getPolitica_acceso());
-			evento.setPrecio(me.getPrecio());
 			evento.setRecinto(Convertidor.mrecintoToEntity(me.getMrecinto()));
 			evento = eventoRepository.save(evento);
 			log.info("El evento se ha modificado correctamente");

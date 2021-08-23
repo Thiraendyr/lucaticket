@@ -50,10 +50,6 @@ public class EventoValidatorS implements EventoValidator {
 		if (mevento.getPolitica_acceso().length() < 5) {
 			this.menssage("La política de acceso es muy corta, debe tener mínimo 5 carácteres");
 		}
-		
-		if (mevento.getPrecio() == 0.0) {
-			this.menssage("El precio es obligatorio");
-		}
 	
 		if (mevento.getMrecinto() == null) {
 			this.menssage("El recinto es obligatorio");
