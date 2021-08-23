@@ -1,0 +1,11 @@
+es.ramirez.me
+es.ramirez.me.configuration
+es.ramirez.me.controller
+es.ramirez.me.interfaces
+es.ramirez.me.model
+es.ramirez.me.model.entities
+es.ramirez.me.repository
+es.ramirez.me.service
+es.ramirez.me.util
+es.ramirez.me.util.exception
+es.ramirez.me.util.validation
