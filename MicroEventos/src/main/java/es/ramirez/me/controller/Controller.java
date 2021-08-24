@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.ramirez.me.interfaces.IEvento;
+import es.ramirez.me.kafka.Producer;
 import es.ramirez.me.model.MEvento;
 import es.ramirez.me.util.exception.ApiUnproccesableEntity;
 import es.ramirez.me.util.validation.EventoValidator;
@@ -38,6 +39,9 @@ public class Controller {
 
 	@Autowired
 	EventoValidator eventov;
+	
+	@Autowired
+	Producer producer;
 
 	/**
 	 * Método que crea un evento
@@ -58,6 +62,7 @@ public class Controller {
 	public ResponseEntity<Object> crearEvento(@RequestBody MEvento mevento) throws ApiUnproccesableEntity {
 		eventov.validator(mevento);
 		String resultado = ievento.crearEvento(mevento);
+		producer.sendMensaje(Integer.toString(mevento.getId_evento()));
 		return ResponseEntity.ok(resultado);
 	}
 
@@ -98,7 +103,7 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> borrarEvento(@ApiParam(value = "Id del evento", required = true)@PathVariable("id") int id) {
+	public ResponseEntity<Object> borrarEvento(@ApiParam(value = "Id del evento", required = true)@PathVariable("id") Integer id) {
 		String resultado = ievento.deleteById(id);
 		return ResponseEntity.ok(resultado);
 	}

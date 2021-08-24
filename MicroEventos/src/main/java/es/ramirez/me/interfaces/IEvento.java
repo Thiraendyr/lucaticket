@@ -45,7 +45,7 @@ public interface IEvento {
 	 * @param id identificador del evento
 	 * @return String devuelve un mensaje si fue eliminado o no el evento
 	 */
-	public String deleteById(int id);
+	public String deleteById(Integer id);
 
 	/**
 	 * Método que realiza la búsqueda en la base de datos de los eventos
