@@ -97,7 +97,7 @@ public class Entrada implements Serializable {
 	private Date fechaFinVenta;
 
 	/**
-	 * iva 
+	 * impuesto de la venta
 	 */
 	@Column(name = "iva")
 	private Double iva;
@@ -121,7 +121,7 @@ public class Entrada implements Serializable {
 	private Double subtotal;
 
 	/**
-	 * saldo final
+	 * saldo final a pagar
 	 */
 	@Column(name = "saldoFinal")
 	private Double saldoFinal;

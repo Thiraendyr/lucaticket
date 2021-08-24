@@ -20,6 +20,7 @@ import es.ramirez.venta.repository.EntradaRepository;
 import es.ramirez.venta.util.Convertidor;
 
 /**
+ * EntradaService.java clase que implementa las operaciones interfaz IEntrada.java
  * 
  * @author Leyanis Ramírez
  * @version 1.0, 20/08/2021
@@ -143,19 +144,19 @@ public class EntradaService implements IEntrada {
 						entradaRepository.save(entrada);
 						reservada = true;
 						log.info("Se reservado correctamente la entrada");
-					}else {
+					} else {
 						log.error("No se ha podido realizar el pago");
 					}
 
-				}else {
+				} else {
 					log.error("No se ha podido realizar el pago, saldo insuficiente");
 				}
 
-			}else {
+			} else {
 				log.error("No eres cliente del banco");
 			}
 
-		}else {
+		} else {
 			log.error("No existe la entrada");
 		}
 

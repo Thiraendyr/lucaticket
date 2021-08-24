@@ -83,10 +83,11 @@ public class Convertidor {
 		return entradas;
 	}
 
+
 	/**
 	 * Método que convierte una lista de entradas entidad a entradas del modelo
 	 * 
-	 * @param eventos lista de entradas entidad
+	 * @param entradas lista de entradas entidad
 	 * @return lista de entradas modelo
 	 */
 	public static List<MEntrada> listEntradaEntityToModel(List<Entrada> entradas) {

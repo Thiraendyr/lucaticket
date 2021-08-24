@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 
 /**
+ * Cliente.java clase para representar un Cliente_DTO.java
  * 
  * @author Leyanis Ramírez
  * @version 1.0, 20/08/2021

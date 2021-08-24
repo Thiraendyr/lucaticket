@@ -7,6 +7,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import es.ramirez.venta.model.MEntrada;
 
 /**
+ * IEntrada.java interfaz donde se declaran las operaciones a realizar sobre la
+ * base de datos del servicio entrada
  * 
  * @author Leyanis Ramírez
  * @version 1.0, 20/08/2021
@@ -14,95 +16,70 @@ import es.ramirez.venta.model.MEntrada;
 public interface IEntrada {
 
 	/**
-	 * Método que realiza la búsqueda en la base de datos de un evento dado su id
+	 * Método que realiza la búsqueda en la base de datos de una entrada dado su id
 	 * 
-	 * @param id identificador del evento
-	 * @return MEvento evento encontrado
+	 * @param id identificador de la entrada
+	 * @return MEntrada entrada encontrada
 	 */
 	public MEntrada findById(Integer id);
 
 	/**
-	 * Método que inserta en la base de datos un nuevo evento
+	 * Método que inserta en la base de datos una nueva entrada
 	 * 
-	 * @param me evento a insertar
-	 * @return String devuelve un mensaje si fue insertado o no el evento
+	 * @param me entrada a insertar
+	 * @return String devuelve un mensaje si fue insertada o no la entrada
 	 */
 	public String crearEntrada(MEntrada me);
 
 	/**
-	 * Método que realiza una búsqueda de un evento en la base de datos, lo modifica
-	 * y lo inserta.
+	 * Método que realiza una búsqueda de una entrada en la base de datos, lo
+	 * modifica y lo inserta.
 	 * 
-	 * @param me evento a actualizar
-	 * @return String devuelve un mensaje si fue modificado o no el evento
+	 * @param me entrada a actualizar
+	 * @return String devuelve un mensaje si fue modificada o no la entrada
 	 */
 	public String editarEntrada(MEntrada me);
 
 	/**
-	 * Método que realiza la búsqueda en la base de datos de un evento para
-	 * eliminarlo
+	 * Método que realiza la búsqueda en la base de datos de una entrada para
+	 * eliminarla
 	 * 
-	 * @param id identificador del evento
-	 * @return String devuelve un mensaje si fue eliminado o no el evento
+	 * @param id identificador de la entrada
+	 * @return String devuelve un mensaje si fue eliminada o no la entrada
 	 */
 	public String deleteById(Integer id);
 
 	/**
-	 * Método que realiza la búsqueda en la base de datos de los eventos
+	 * Método que realiza la búsqueda en la base de datos de las entradas
 	 * 
-	 * @return eventos existentes
+	 * @return entradas existentes
 	 */
 	public List<MEntrada> findAll();
 
 	/**
-	 * Método que realiza la búsqueda en la base de datos de un evento dado su
+	 * Método que realiza la búsqueda en la base de datos de una entrada dado su
 	 * nombre
 	 * 
-	 * @param nombre contenido de un evento
-	 * @return eventos encontrados
+	 * @param nombre nombre de una entrada
+	 * @return entradas encontradas
 	 */
 	public List<MEntrada> findByNombre(String nombre);
 
 	/**
-	 * Método que realiza la búsqueda en la base de datos de un evento dado su
-	 * género
+	 * Método que realiza la búsqueda en la base de datos de una entrada dado su
+	 * tipo
 	 * 
-	 * @param tipoGenero género de un evento
-	 * @return eventos encontrados
+	 * @param tipoEntrada tipo de entrada
+	 * @return entradas encontradas
 	 */
 	public List<MEntrada> findByTipo(String tipoEntrada);
 
-//	/**
-//	 * 
-//	 * @param precio
-//	 * @param ivaPorciento
-//	 * @param entradasPorPedido
-//	 * @return
-//	 */
-//	public Double ivaAPagar(Double precio, Double ivaPorciento, int entradasPorPedido);
-//
-//	/**
-//	 * 
-//	 * @param precio
-//	 * @param ivaPorciento
-//	 * @param entradasPorPedido
-//	 * @return
-//	 */
-//	public Double saldoFinal(Double precio, Double ivaPorciento, int entradasPorPedido);
-//
-//	/**
-//	 * 
-//	 * @param precio
-//	 * @param entradasPorPedido
-//	 * @return
-//	 */
-//	public Double subTotal(Double precio, int entradasPorPedido);
-
 	/**
+	 * Método que realiza la reserva de las entradas
 	 * 
-	 * @param pago
-	 * @param id
-	 * @return
+	 * @param idEntrada identificador de la entrada a reservar
+	 * @return true o false si fue realizada la reserva
+	 * @throws JsonProcessingException Excepcion para procesar un json
 	 */
 	public boolean pagoTickest(Integer idEntrada) throws JsonProcessingException;
 

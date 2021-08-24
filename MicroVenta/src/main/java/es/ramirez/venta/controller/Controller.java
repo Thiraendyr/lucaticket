@@ -16,6 +16,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import es.ramirez.venta.interfaces.IEntrada;
 import es.ramirez.venta.model.MEntrada;
+import es.ramirez.venta.util.exception.ApiUnproccesableEntity;
+import es.ramirez.venta.util.validation.EntradaValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -24,7 +26,8 @@ import io.swagger.annotations.ApiResponses;
 
 /**
  * Controller.java clase que responde a la interacción entre consumir el
- * servicio evento y las peticiones del modelo donde se gestiona el evento
+ * servicio de entrada y las peticiones del modelo donde se gestiona las
+ * entradas
  * 
  * @author Leyanis Ramírez
  * @version 1.0, 10/08/2021
@@ -36,11 +39,14 @@ public class Controller {
 	@Autowired
 	IEntrada ientrada;
 
+	@Autowired
+	EntradaValidator entradaValidator;
+
 	/**
-	 * Método que crea un evento
+	 * Método que crea una entrada
 	 * 
-	 * @param mevento evento a crear
-	 * @return ResponseEntity que contiene un nuevo eventoF
+	 * @param mentrada entrada a crear
+	 * @return ResponseEntity que contiene una nueva entrada
 	 * @throws ApiUnproccesableEntity Excepcion para el estado 422
 	 */
 	@PostMapping(value = "/crearEntrada", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -52,16 +58,17 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> crearEntrada(@RequestBody MEntrada mentrada) {
+	public ResponseEntity<Object> crearEntrada(@RequestBody MEntrada mentrada) throws ApiUnproccesableEntity {
+		entradaValidator.validator(mentrada);
 		String resultado = ientrada.crearEntrada(mentrada);
 		return ResponseEntity.ok(resultado);
 	}
 
 	/**
-	 * Método que modifica un evento
+	 * Método que modifica una entrada
 	 * 
-	 * @param mevento un Evento a modificar
-	 * @return ResponseEntity que contiene un evento modificado
+	 * @param mentrada una Entrada a modificar
+	 * @return ResponseEntity que contiene una entrada modificada
 	 * @throws ApiUnproccesableEntity Excepcion para el estado 422
 	 */
 	@PutMapping(value = "/editarEntrada", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -73,16 +80,18 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> editarEntrada(@RequestBody MEntrada mentrada) {
+	public ResponseEntity<Object> editarEntrada(@RequestBody MEntrada mentrada) throws ApiUnproccesableEntity {
+		entradaValidator.validator(mentrada);
 		String resultado = ientrada.editarEntrada(mentrada);
 		return ResponseEntity.ok(resultado);
 	}
 
 	/**
-	 * Método que elimina un evento dado un id
+	 * Método que elimina una entrada dado un id
 	 * 
-	 * @param id del evento a eliminar
-	 * @return ResponseEntity que con contiene un String que fue eliminado el evento
+	 * @param id de la entrada a eliminar
+	 * @return ResponseEntity que con contiene un String que fue eliminada la
+	 *         entrada
 	 */
 	@DeleteMapping(value = "/borrarEntrada/{id}")
 	@ApiOperation(produces = "application/json", value = "Método que elimina una entrada dado un id", httpMethod = "DELETE", notes = "<br>Operación que elimina una entrada", response = String.class)
@@ -100,9 +109,9 @@ public class Controller {
 	}
 
 	/**
-	 * Método que lista los eventos
+	 * Método que lista las entradas
 	 * 
-	 * @return ResponseEntity que contiene una lista de eventos
+	 * @return ResponseEntity que contiene una lista de entradas
 	 */
 	@GetMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(produces = "application/json", value = "Método que lista las entradas", httpMethod = "GET", notes = "<br>Operación que lista las entradas", response = MEntrada[].class)
@@ -118,10 +127,10 @@ public class Controller {
 	}
 
 	/**
-	 * Método que devuelve un evento dado su id
+	 * Método que devuelve una entrada dado su id
 	 * 
-	 * @param id del evento
-	 * @return ResponseEntity que contiene el evento encontrado
+	 * @param id de la entrada
+	 * @return ResponseEntity que contiene la entrada encontrado
 	 */
 	@GetMapping(value = "/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(produces = "application/json", value = "Método que devuelve una entrada dado su id", httpMethod = "GET", notes = "<br>Operación que devuelve una entrada dado su id", response = MEntrada.class)
@@ -133,18 +142,18 @@ public class Controller {
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
 	public ResponseEntity<Object> findById(
-			@ApiParam(value = "Id del evento", required = true) @PathVariable("id") Integer id) {
+			@ApiParam(value = "Id de la entrada", required = true) @PathVariable("id") Integer id) {
 		return ResponseEntity.ok(ientrada.findById(id));
 	}
 
 	/**
-	 * Método que devuelve un evento dado su nombre
+	 * Método que devuelve una entrada dado su nombre
 	 * 
-	 * @param nombre del evento
-	 * @return ResponseEntity que contiene un evento encontrado
+	 * @param nombre de la entrada
+	 * @return ResponseEntity que contiene una entrada encontrada
 	 */
 	@GetMapping(value = "/findByNombre/{nombre}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiOperation(produces = "application/json", value = "Método que devuelve una entrada dado su nombre", httpMethod = "GET", notes = "<br>Operación que devuelve un evento dado su nombre", response = MEntrada[].class)
+	@ApiOperation(produces = "application/json", value = "Método que devuelve una entrada dado su nombre", httpMethod = "GET", notes = "<br>Operación que devuelve una entrada dado su nombre", response = MEntrada[].class)
 	@ApiResponses(value = { @ApiResponse(code = 200, response = MEntrada[].class, message = "Successful operation"),
 			@ApiResponse(code = 400, message = "Bad Request", response = Error.class),
 			@ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
@@ -158,10 +167,10 @@ public class Controller {
 	}
 
 	/**
-	 * Método que devuelve un evento dado su género
+	 * Método que devuelve una entrada dado su tipo
 	 * 
-	 * @param genero busqueda por genero
-	 * @return ResponseEntity que contiene un evento encontrado
+	 * @param tipo búsqueda por tipo de entrada
+	 * @return ResponseEntity que contiene una entrada encontrada
 	 */
 	@GetMapping(value = "/findByTipo/{tipo}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(produces = "application/json", value = "Método que devuelve una entrada dado su tipo", httpMethod = "GET", notes = "<br>Operación que devuelve una entrada dado su tipo", response = MEntrada[].class)
@@ -178,12 +187,20 @@ public class Controller {
 	}
 
 	/**
-	 * 
-	 * @param pago
-	 * @param idEntrada
-	 * @return
+	 * Método que realiza la reserva de una entrada
+	 * @param idEntrada identificador de la entrada
+	 * @return si fue reservada o no la entrada
+	 * @throws JsonProcessingException Excepcion para procesar un json
 	 */
-	@GetMapping(value = "/pagoTickest/{idEntrada}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/pagoTickect/{idEntrada}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(produces = "application/json", value = "Método que realiza la reserva de la entrada", httpMethod = "GET", notes = "<br>Operación que devuelve true si se ha realizado la reserva correctamente", response = MEntrada[].class)
+	@ApiResponses(value = { @ApiResponse(code = 200, response = MEntrada[].class, message = "Successful operation"),
+			@ApiResponse(code = 400, message = "Bad Request", response = Error.class),
+			@ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
+			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
+			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
+			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
+			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
 	public ResponseEntity<Object> getPagoTickest(
 			@ApiParam(value = "id de la entrada", required = true) @PathVariable("idEntrada") Integer idEntrada)
 			throws JsonProcessingException {
