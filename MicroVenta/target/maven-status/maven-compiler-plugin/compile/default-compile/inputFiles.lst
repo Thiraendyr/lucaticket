@@ -1,0 +1,14 @@
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\interfaces\IEntrada.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\service\EntradaService.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\util\exception\ApiUnproccesableEntity.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\repository\EntradaRepository.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\banco\Cliente.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\banco\BancoService.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\controller\Controller.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\model\MEntrada.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\model\entity\Entrada.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\MicroVentaApplication.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\util\Convertidor.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\util\validation\EntradaValidator.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\configuration\SwaggerConfig.java
+C:\Users\ledua\eclipse-workspace\MicroVenta\src\main\java\es\ramirez\venta\util\validation\EntradaValidatorS.java
