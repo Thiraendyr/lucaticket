@@ -18,7 +18,12 @@ import es.ramirez.me.interfaces.IEvento;
 import es.ramirez.me.model.MEvento;
 import es.ramirez.me.model.MRecinto;
 
-//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+/**
+ * MicroEventosApplicationTests.java clase para las pruebas unitarias
+ * 
+ * @author Leyanis Ramírez
+ * @version 1.0, 11/08/2021
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class MicroEventosApplicationTests {
