@@ -66,7 +66,7 @@ public class EventoService implements IEvento {
 	}
 
 	@Override
-	public String deleteById(int id) {
+	public String deleteById(Integer id) {
 		Evento e = eventoRepository.findById(id).orElse(null);
 		if (e == null) {
 			log.error("El evento no existe");
