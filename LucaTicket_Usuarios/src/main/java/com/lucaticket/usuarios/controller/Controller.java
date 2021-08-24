@@ -62,7 +62,7 @@ public class Controller {
 	 * @return usuario buscado y httpsstatus
 	 *
 	 */
-	public ResponseEntity<Usuario_DTO> getUsuarioById(@PathVariable("idUsuario") int idUsuario) {
+	public ResponseEntity<Usuario_DTO> getUsuarioById(@PathVariable("idUsuario") Integer idUsuario) {
 		return new ResponseEntity<Usuario_DTO>(usuarioService.findUsuarioById(idUsuario), HttpStatus.OK);
 	}
 
@@ -138,7 +138,7 @@ public class Controller {
 	 * @return httpsstatus
 	 *
 	 */
-	public ResponseEntity deleteUsuarioById(@PathVariable("idUsuario") int idUsuario) {
+	public ResponseEntity deleteUsuarioById(@PathVariable("idUsuario") Integer idUsuario) {
 		if (usuarioService.findUsuarioById(idUsuario).getId_usuario() != null) {
 			usuarioService.removeUsuarioById(idUsuario);
 			return new ResponseEntity(HttpStatus.OK);

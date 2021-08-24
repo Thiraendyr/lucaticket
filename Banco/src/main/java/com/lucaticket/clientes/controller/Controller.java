@@ -61,7 +61,7 @@ public class Controller {
 	 * @return cliente buscado y httpsstatus
 	 *
 	 */
-	public ResponseEntity<Cliente_DTO> getClienteById(@PathVariable("idCliente") int idCliente) {
+	public ResponseEntity<Cliente_DTO> getClienteById(@PathVariable("idCliente") Integer idCliente) {
 		return new ResponseEntity<Cliente_DTO>(clienteService.findById(idCliente), HttpStatus.OK);
 	}
 
@@ -141,7 +141,7 @@ public class Controller {
 	 * @return httpsstatus
 	 *
 	 */
-	public ResponseEntity deleteClienteById(@PathVariable("idCliente") int idCliente) {
+	public ResponseEntity deleteClienteById(@PathVariable("idCliente") Integer idCliente) {
 		if (clienteService.findById(idCliente).getIdCliente() != null) {
 			clienteService.deleteById(idCliente);
 			return new ResponseEntity(HttpStatus.OK);
