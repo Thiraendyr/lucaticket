@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/entrada")
-@Api(tags = { "Entradas" }, value = "Evento Resource REST Endpoint", description = "Muestra la información del evento")
+@Api(tags = { "Entradas" }, value = "Entrada Resource REST Endpoint", description = "Muestra la información de la entrada")
 public class Controller {
 	@Autowired
 	IEntrada ientrada;

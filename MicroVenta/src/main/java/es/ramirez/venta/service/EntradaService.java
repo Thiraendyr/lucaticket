@@ -130,7 +130,7 @@ public class EntradaService implements IEntrada {
 
 	@Override
 	public boolean pagoTickest(Integer idEntrada) throws JsonProcessingException {
-		Entrada entrada = entradaRepository.getById(idEntrada);
+		Entrada entrada = entradaRepository.findById(idEntrada).orElse(null);
 		boolean reservada = false;
 		if (entrada != null) {
 			Cliente cliente = bancoService.getClienteById(entrada.getIdUsuario());
