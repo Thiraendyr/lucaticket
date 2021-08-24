@@ -88,7 +88,7 @@ class BancoApplicationTests {
 		assertTrue(cli.getNombre().equals(ret.getNombre()));
 
 	}
-/*
+
 	@Test
 	@Rollback
 	public void deleteClienteTest() {
@@ -96,6 +96,6 @@ class BancoApplicationTests {
 			repos.deleteById(cli.getIdCliente());
 		}
 
-	}*/
+	}
 
 }

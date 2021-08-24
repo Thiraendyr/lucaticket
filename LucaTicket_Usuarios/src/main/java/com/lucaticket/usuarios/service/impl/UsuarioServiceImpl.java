@@ -44,7 +44,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	 * @param id_usuario que se desea recuperar
 	 * @return usuario buscado
 	 */
-	public Usuario_DTO findUsuarioById(int id_usuario) {
+	public Usuario_DTO findUsuarioById(Integer id_usuario) {
 		return Convertidor.convertirModel_Dto(usuarioRepository.findById(id_usuario).orElse(new Usuario()));
 	}
 
@@ -65,7 +65,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	 * 
 	 * @param id_usuario que se desea eliminar
 	 */
-	public void removeUsuarioById(int id_usuario) {
+	public void removeUsuarioById(Integer id_usuario) {
 		usuarioRepository.deleteById(id_usuario);
 	}
 

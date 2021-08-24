@@ -44,7 +44,7 @@ public class ClienteServiceImpl implements IClienteService {
 	 * @param id que se desea recuperar
 	 * @return cliente buscado
 	 */
-	public Cliente_DTO findById(int idCliente) {
+	public Cliente_DTO findById(Integer idCliente) {
 		return Convertidor.convertirModel_Dto(repos.findById(idCliente).orElse(new Cliente()));
 	}
 
@@ -65,7 +65,7 @@ public class ClienteServiceImpl implements IClienteService {
 	 * 
 	 * @param id que se desea eliminar
 	 */
-	public void deleteById(int idCliente) {
+	public void deleteById(Integer idCliente) {
 		repos.deleteById(idCliente);		
 	}
 

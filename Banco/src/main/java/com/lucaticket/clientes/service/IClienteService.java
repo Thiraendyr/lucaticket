@@ -18,10 +18,10 @@ public interface IClienteService {
 
 	List<Cliente_DTO> findAll();
 
-	Cliente_DTO findById(int idCliente);
+	Cliente_DTO findById(Integer idCliente);
 
 	Cliente_DTO save(Cliente_DTO cliente);
 
-	void deleteById(int idCliente);
+	void deleteById(Integer idCliente);
 
 }
