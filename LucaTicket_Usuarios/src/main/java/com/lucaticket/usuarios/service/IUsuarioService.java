@@ -17,9 +17,9 @@ import com.lucaticket.usuarios.model.dto.Usuario_DTO;
 public interface IUsuarioService {
 	List<Usuario_DTO> findAllUsuarios();
 
-	Usuario_DTO findUsuarioById(int id_usuario);
+	Usuario_DTO findUsuarioById(Integer id_usuario);
 
 	Usuario_DTO saveUsuario(Usuario_DTO usuario_dto);
 
-	void removeUsuarioById(int id_usuario);
+	void removeUsuarioById(Integer id_usuario);
 }

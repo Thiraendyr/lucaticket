@@ -1,0 +1,12 @@
+es.ramirez.venta
+es.ramirez.venta.banco
+es.ramirez.venta.configuration
+es.ramirez.venta.controller
+es.ramirez.venta.interfaces
+es.ramirez.venta.model
+es.ramirez.venta.model.entity
+es.ramirez.venta.repository
+es.ramirez.venta.service
+es.ramirez.venta.util
+es.ramirez.venta.util.exception
+es.ramirez.venta.util.validation

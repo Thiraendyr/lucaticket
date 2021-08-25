@@ -1,0 +1,244 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: Swagger API Usuarios
+  termsOfService: http://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: localhost:2222
+basePath: /banco/cliente
+tags:
+  - name: cliente
+    description: gestión de clientes de un banco
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+schemes:
+  - http
+paths:
+  /all:
+    get:
+      tags:
+        - cliente
+      summary: consulta una lista de clientes
+      operationId: getAllClientes
+      produces:
+        - application/json
+        - application/xml
+      responses:
+        '200':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/listaClientes'
+        '400':
+          description: Invalid ID supplied
+        '401':
+          description: Not authorized
+        '404':
+          description: Not found
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+  /{idCliente}:
+    get:
+      tags:
+        - cliente
+      summary: consulta un cliente
+      operationId: getClienteById
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: idCliente
+          in: path
+          description: cliente a obtener
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/cliente'
+        '400':
+          description: Invalid ID supplied
+        '401':
+          description: Not authorized
+        '404':
+          description: Not found
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+    delete:
+      tags:
+        - cliente
+      summary: Elimina un cliente
+      operationId: deleteClienteById
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: idCliente
+          in: path
+          description: Id de cliente a eliminar
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/RespuestaOk'
+        '400':
+          description: Invalid ID supplied
+        '401':
+          description: Not authorized
+        '404':
+          description: Not found
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+  /crear:
+    post:
+      tags:
+        - cliente
+      summary: agrega un cliente
+      operationId: postCliente
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: agrega un cliente
+          required: true
+          schema:
+            $ref: '#/definitions/cliente'
+      responses:
+        '201':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/RespuestaOk'
+        '226':
+          description: Id en uso
+        '400':
+          description: Error de JSON
+        '401':
+          description: Not authorized
+        '404':
+          description: Not found
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+  /modificar:
+    put:
+      tags:
+        - cliente
+      summary: Actualiza un cliente
+      operationId: putCliente
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: actualizar cliente
+          required: true
+          schema:
+            $ref: '#/definitions/cliente'
+      responses:
+        '200':
+          description: operacion exitosa
+          schema:
+            $ref: '#/definitions/RespuestaOk'
+        '400':
+          description: Error de JSON
+        '401':
+          description: Not authorized
+        '404':
+          description: Id usuario no encontrado
+        '500':
+          description: Generic Server Fault
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            example:
+              - code: INTERNAL
+                message: Unknown server error
+definitions:
+  cliente:
+    type: object
+    properties:
+      id_usuario:
+        type: integer
+      nombre:
+        type: string
+      apellido:
+        type: string
+      contrasenia:
+        type: string
+      saldo:
+        type: number
+      numeroCuenta:
+        type: string
+  listaClientes:
+    type: array
+    items:
+      $ref: '#/definitions/cliente'
+  RespuestaOk:
+    type: object
+    properties:
+      codigo:
+        type: string
+      mensaje:
+        type: string
+    example:
+      codigo: '0'
+      mensaje: Operación exitosa
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
