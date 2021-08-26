@@ -1,20 +1,21 @@
 package es.ramirez.venta;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -27,7 +28,7 @@ import es.ramirez.venta.model.MEntrada;
  * @author Leyanis Ramírez
  * @version 1.0, 11/08/2021
  */
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 class MicroVentaApplicationTests {
 
@@ -79,7 +80,7 @@ class MicroVentaApplicationTests {
 		entrada.setTipoEntrada("Entrada de pago");
 		entrada.setEntradasPorPedido(1);
 		entrada.setEstadoReserva("SIN RESERVAR");
-		entrada.setIva(5.0);
+		entrada.setIva(6.0);
 		entrada.setPrecio(16.0);
 		entrada.setIvaAPagar(0.0);
 		entrada.setSubtotal(0.0);

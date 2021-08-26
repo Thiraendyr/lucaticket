@@ -192,7 +192,7 @@ public class Controller {
 	 * @return si fue reservada o no la entrada
 	 * @throws JsonProcessingException Excepcion para procesar un json
 	 */
-	@GetMapping(value = "/pagoTickect/{idEntrada}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/pagoTicket/{idEntrada}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(produces = "application/json", value = "Método que realiza la reserva de la entrada", httpMethod = "GET", notes = "<br>Operación que devuelve true si se ha realizado la reserva correctamente", response = MEntrada[].class)
 	@ApiResponses(value = { @ApiResponse(code = 200, response = MEntrada[].class, message = "Successful operation"),
 			@ApiResponse(code = 400, message = "Bad Request", response = Error.class),

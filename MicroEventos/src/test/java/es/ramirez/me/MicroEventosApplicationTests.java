@@ -1,18 +1,16 @@
 package es.ramirez.me;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import es.ramirez.me.interfaces.IEvento;
 import es.ramirez.me.model.MEvento;
@@ -24,7 +22,6 @@ import es.ramirez.me.model.MRecinto;
  * @author Leyanis Ramírez
  * @version 1.0, 11/08/2021
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 class MicroEventosApplicationTests {
 
