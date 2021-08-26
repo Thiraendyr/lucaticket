@@ -1,15 +1,12 @@
 package es.ramirez.venta.banco;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
-
 
 /**
  * BancoService.java clase para acceder al servicio del banco
@@ -19,7 +16,7 @@ import com.sun.jersey.api.json.JSONConfiguration;
  */
 @Service
 public class BancoService {
-	
+
 	private static final String UPDATE_CLIENT_API = "http://localhost:2223/banco/cliente/modificar";
 	private static final String FIND_CLIENT_API = "http://localhost:2223/banco/cliente/";
 
@@ -41,14 +38,16 @@ public class BancoService {
 	 * @return número con el estado del código
 	 */
 	public int getJsonCliente(String cliente) {
-		ClientConfig clientConfig = new  DefaultClientConfig();
-		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-		Client client = Client.create(clientConfig);
-		WebResource webResource = client.resource(UPDATE_CLIENT_API);
-		ClientResponse response = webResource.type("application/json").put(ClientResponse.class,cliente);
-		int status = response.getStatus();
-		return status;
-	}
 
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> request = new HttpEntity<>(cliente, headers);
+
+		restTemplate.put(UPDATE_CLIENT_API, request);
+
+		return new ResponseEntity<String>(HttpStatus.OK).getStatusCodeValue();
+
+	}
 
 }
