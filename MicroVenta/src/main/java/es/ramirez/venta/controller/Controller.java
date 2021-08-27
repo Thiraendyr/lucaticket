@@ -1,6 +1,9 @@
 package es.ramirez.venta.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,7 +37,8 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/entrada")
-@Api(tags = { "Entradas" }, value = "Entrada Resource REST Endpoint", description = "Muestra la información de la entrada")
+@Api(tags = {
+		"Entradas" }, value = "Entrada Resource REST Endpoint", description = "Muestra la información de la entrada")
 public class Controller {
 	@Autowired
 	IEntrada ientrada;
@@ -58,10 +62,14 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> crearEntrada(@RequestBody MEntrada mentrada) throws ApiUnproccesableEntity {
+	public ResponseEntity<MEntrada> crearEntrada(@RequestBody MEntrada mentrada) throws ApiUnproccesableEntity {
 		entradaValidator.validator(mentrada);
 		String resultado = ientrada.crearEntrada(mentrada);
-		return ResponseEntity.ok(resultado);
+		if (resultado.equals("ok")) {
+			return new ResponseEntity<MEntrada>(mentrada, HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -80,10 +88,14 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> editarEntrada(@RequestBody MEntrada mentrada) throws ApiUnproccesableEntity {
+	public ResponseEntity<MEntrada> editarEntrada(@RequestBody MEntrada mentrada) throws ApiUnproccesableEntity {
 		entradaValidator.validator(mentrada);
 		String resultado = ientrada.editarEntrada(mentrada);
-		return ResponseEntity.ok(resultado);
+		if (resultado.equals("ok")) {
+			return new ResponseEntity<MEntrada>(mentrada, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -102,10 +114,14 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> borrarEntrada(
+	public ResponseEntity<String> borrarEntrada(
 			@ApiParam(value = "Id del entrada", required = true) @PathVariable("id") int id) {
 		String resultado = ientrada.deleteById(id);
-		return ResponseEntity.ok(resultado);
+		if (resultado.equals("ok")) {
+			return new ResponseEntity<String>("Borrado correctamente", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("No existe", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -122,8 +138,8 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findAll() {
-		return ResponseEntity.ok(ientrada.findAll());
+	public ResponseEntity<List<MEntrada>> findAll() {
+		return new ResponseEntity<List<MEntrada>>(ientrada.findAll(), HttpStatus.OK);
 	}
 
 	/**
@@ -141,9 +157,9 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findById(
+	public ResponseEntity<MEntrada> findById(
 			@ApiParam(value = "Id de la entrada", required = true) @PathVariable("id") Integer id) {
-		return ResponseEntity.ok(ientrada.findById(id));
+		return new ResponseEntity<MEntrada>(ientrada.findById(id), HttpStatus.OK);
 	}
 
 	/**
@@ -161,9 +177,9 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findByNombre(
+	public ResponseEntity<List<MEntrada>> findByNombre(
 			@ApiParam(value = "nombre de la entrada", required = true) @PathVariable("nombre") String nombre) {
-		return ResponseEntity.ok(ientrada.findByNombre(nombre));
+		return new ResponseEntity<List<MEntrada>>(ientrada.findByNombre(nombre), HttpStatus.OK);
 	}
 
 	/**
@@ -181,13 +197,14 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findByTipo(
+	public ResponseEntity<List<MEntrada>> findByTipo(
 			@ApiParam(value = "tipo de entrada", required = true) @PathVariable("tipo") String tipo) {
-		return ResponseEntity.ok(ientrada.findByTipo(tipo));
+		return new ResponseEntity<List<MEntrada>>(ientrada.findByTipo(tipo), HttpStatus.OK);
 	}
 
 	/**
 	 * Método que realiza la reserva de una entrada
+	 * 
 	 * @param idEntrada identificador de la entrada
 	 * @return si fue reservada o no la entrada
 	 * @throws JsonProcessingException Excepcion para procesar un json
