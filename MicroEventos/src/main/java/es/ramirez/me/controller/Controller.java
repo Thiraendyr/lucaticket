@@ -1,6 +1,9 @@
 package es.ramirez.me.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.ramirez.me.interfaces.IEvento;
-import es.ramirez.me.kafka.Producer;
 import es.ramirez.me.model.MEvento;
 import es.ramirez.me.util.exception.ApiUnproccesableEntity;
 import es.ramirez.me.util.validation.EventoValidator;
@@ -39,9 +41,6 @@ public class Controller {
 
 	@Autowired
 	EventoValidator eventov;
-	
-	@Autowired
-	Producer producer;
 
 	/**
 	 * Método que crea un evento
@@ -59,11 +58,14 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> crearEvento(@RequestBody MEvento mevento) throws ApiUnproccesableEntity {
+	public ResponseEntity<MEvento> crearEvento(@RequestBody MEvento mevento) throws ApiUnproccesableEntity {
 		eventov.validator(mevento);
 		String resultado = ievento.crearEvento(mevento);
-		producer.sendMensaje(Integer.toString(mevento.getId_evento()));
-		return ResponseEntity.ok(resultado);
+		if (resultado.equals("ok")) {
+			return new ResponseEntity<MEvento>(mevento, HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -82,10 +84,14 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> editarEvento(@RequestBody MEvento mevento) throws ApiUnproccesableEntity {
+	public ResponseEntity<MEvento> editarEvento(@RequestBody MEvento mevento) throws ApiUnproccesableEntity {
 		eventov.validator(mevento);
 		String resultado = ievento.editarEvento(mevento);
-		return ResponseEntity.ok(resultado);
+		if (resultado.equals("ok")) {
+			return new ResponseEntity<MEvento>(mevento, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -103,9 +109,14 @@ public class Controller {
 			@ApiResponse(code = 403, message = "Forbidden", response = Error.class),
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> borrarEvento(@ApiParam(value = "Id del evento", required = true)@PathVariable("id") Integer id) {
+	public ResponseEntity<String> borrarEvento(
+			@ApiParam(value = "Id del evento", required = true) @PathVariable("id") Integer id) {
 		String resultado = ievento.deleteById(id);
-		return ResponseEntity.ok(resultado);
+		if (resultado.equals("ok")) {
+			return new ResponseEntity<String>("Borrado correctamente", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("No existe", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -122,8 +133,8 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findAll() {
-		return ResponseEntity.ok(ievento.findAll());
+	public ResponseEntity<List<MEvento>> findAll() {
+		return new ResponseEntity<List<MEvento>>(ievento.findAll(), HttpStatus.OK);
 	}
 
 	/**
@@ -141,9 +152,9 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findById(
+	public ResponseEntity<MEvento> findById(
 			@ApiParam(value = "Id del evento", required = true) @PathVariable("id") Integer id) {
-		return ResponseEntity.ok(ievento.findById(id));
+		return new ResponseEntity<MEvento>(ievento.findById(id), HttpStatus.OK);
 	}
 
 	/**
@@ -161,9 +172,9 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findByNombre(
+	public ResponseEntity<List<MEvento>> findByNombre(
 			@ApiParam(value = "nombre del evento", required = true) @PathVariable("nombre") String nombre) {
-		return ResponseEntity.ok(ievento.findByNombre(nombre));
+		return new ResponseEntity<List<MEvento>>(ievento.findByNombre(nombre), HttpStatus.OK);
 	}
 
 	/**
@@ -181,9 +192,9 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findByCiudad(
+	public ResponseEntity<List<MEvento>> findByCiudad(
 			@ApiParam(value = "ciudad del evento", required = true) @PathVariable("ciudad") String ciudad) {
-		return ResponseEntity.ok(ievento.findByCiudad(ciudad));
+		return new ResponseEntity<List<MEvento>>(ievento.findByCiudad(ciudad), HttpStatus.OK);
 	}
 
 	/**
@@ -201,8 +212,8 @@ public class Controller {
 			@ApiResponse(code = 404, message = "Not Found", response = Error.class),
 			@ApiResponse(code = 422, message = "Invalid data", response = Error.class),
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
-	public ResponseEntity<Object> findByGenero(
+	public ResponseEntity<List<MEvento>> findByGenero(
 			@ApiParam(value = "género del evento", required = true) @PathVariable("genero") String genero) {
-		return ResponseEntity.ok(ievento.findByTipoGenero(genero));
+		return new ResponseEntity<List<MEvento>>(ievento.findByTipoGenero(genero), HttpStatus.OK);
 	}
 }
