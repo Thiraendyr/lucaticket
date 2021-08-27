@@ -87,7 +87,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>PruebaJenkins</finalName>
+		<finalName>Luckaticket_Banco</finalName>
 	</build>
 
 </project>
