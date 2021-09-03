@@ -1,0 +1,14 @@
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\service\VentaService.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\service\UsuarioService.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\configuration\SwaggerConfig.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\entity\Venta.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\entity\Evento.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\MicroConsumerApplication.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\kafka\Producer.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\entity\Usuario.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\controller\EventoController.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\entity\Recinto.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\kafka\Consumer.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\controller\VentaController.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\service\EmailService.java
+C:\Users\ledua\eclipse-workspace\MicroConsumer\src\main\java\es\bligor\mc\service\EventoService.java

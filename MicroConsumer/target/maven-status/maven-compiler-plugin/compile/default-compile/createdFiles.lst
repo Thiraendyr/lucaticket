@@ -1,0 +1,14 @@
+es\bligor\mc\kafka\Producer.class
+es\bligor\mc\entity\Usuario.class
+es\bligor\mc\controller\VentaController.class
+es\bligor\mc\service\UsuarioService.class
+es\bligor\mc\service\EventoService.class
+es\bligor\mc\kafka\Consumer.class
+es\bligor\mc\entity\Venta.class
+es\bligor\mc\entity\Recinto.class
+es\bligor\mc\entity\Evento.class
+es\bligor\mc\service\EmailService.class
+es\bligor\mc\controller\EventoController.class
+es\bligor\mc\configuration\SwaggerConfig.class
+es\bligor\mc\service\VentaService.class
+es\bligor\mc\MicroConsumerApplication.class
